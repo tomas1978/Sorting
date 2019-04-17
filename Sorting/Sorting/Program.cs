@@ -53,6 +53,25 @@ namespace Sorting
             }
         }
 
+        public static void InsertionSort(List<int> list)
+        {
+            int i, j;
+            for (i = 1; i < list.Count; i++)
+            {
+                int item = list[i];
+                int ins = 0;
+                for (j = i - 1; j >= 0 && ins != 1;)
+                {
+                    if (item < list[j])
+                    {
+                        list[j + 1] = list[j];
+                        j--;
+                        list[j + 1] = item;
+                    }
+                    else ins = 1;
+                }
+            }
+        }
         public static void MakeRandomList(List<int> list, int size)
         {
             int newNumber;
@@ -71,19 +90,28 @@ namespace Sorting
             int listSize = 20000;
             List<int> tallista1 = new List<int>();
             List<int> tallista2 = new List<int>();
+            List<int> tallista3 = new List<int>();
             MakeRandomList(tallista1,listSize);
             MakeRandomList(tallista2, listSize);
+            MakeRandomList(tallista3, listSize);
+
             sw.Reset();
             sw.Start();
             BubbleSort(tallista1);
             sw.Stop();
             Console.WriteLine("Bubblesort: " + sw.ElapsedMilliseconds + " millisekunder");
+
             sw.Reset();
             sw.Start();
             SelectionSort(tallista2);
             sw.Stop();
             Console.WriteLine("Selectionsort: " + sw.ElapsedMilliseconds + " millisekunder");
 
+            sw.Reset();
+            sw.Start();
+            InsertionSort(tallista3);
+            sw.Stop();
+            Console.WriteLine("Insertionsort: " + sw.ElapsedMilliseconds + " millisekunder");
         }
     }
 }
