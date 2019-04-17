@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace Sorting
 {
     class Program
     {
-        public static void Bubblesort(List<int> list)
+        public static void BubbleSort(List<int> list)
         {
             for(int i = 0; i < list.Count - 1; i++)
             {
@@ -52,19 +53,37 @@ namespace Sorting
             }
         }
 
+        public static void MakeRandomList(List<int> list, int size)
+        {
+            int newNumber;
+            Random rand = new Random();
+            for(int i=0;i<size;i++)
+            {
+                newNumber = rand.Next(0, size);
+                list.Add(newNumber);
+            }
+
+        }
+
         static void Main(string[] args)
         {
-            List<int> tallista = new List<int>();
-            tallista.Add(8);
-            tallista.Add(4);
-            tallista.Add(1);
-            tallista.Add(9);
-            tallista.Add(5);
-            SelectionSort(tallista);
-            foreach(int element in tallista)
-            {
-                Console.Write(element + " ");
-            }
+            Stopwatch sw = new Stopwatch();
+            int listSize = 20000;
+            List<int> tallista1 = new List<int>();
+            List<int> tallista2 = new List<int>();
+            MakeRandomList(tallista1,listSize);
+            MakeRandomList(tallista2, listSize);
+            sw.Reset();
+            sw.Start();
+            BubbleSort(tallista1);
+            sw.Stop();
+            Console.WriteLine("Bubblesort: " + sw.ElapsedMilliseconds + " millisekunder");
+            sw.Reset();
+            sw.Start();
+            SelectionSort(tallista2);
+            sw.Stop();
+            Console.WriteLine("Selectionsort: " + sw.ElapsedMilliseconds + " millisekunder");
+
         }
     }
 }
