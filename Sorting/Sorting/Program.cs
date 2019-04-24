@@ -73,7 +73,7 @@ namespace Sorting
             }
         }
 
-        private static List<int> MergeSort(List<int> unsorted)
+        private static List<int> MergeSort(List<int> unsorted) //From w3resource.com
         {
             if (unsorted.Count <= 1)
                 return unsorted;
@@ -129,8 +129,57 @@ namespace Sorting
             }
             return result;
         }
+        private static void QuickSort(List<int> list, int left, int right) //From w3resource.com
+        {
+            if (left < right)
+            {
+                int pivot = Partition(list, left, right);
 
-    public static void MakeRandomList(List<int> list, int size) //From w3resource.com
+                if (pivot > 1)
+                {
+                    QuickSort(list, left, pivot - 1);
+                }
+                if (pivot + 1 < right)
+                {
+                    QuickSort(list, pivot + 1, right);
+                }
+            }
+        }
+
+        private static int Partition(List<int> list, int left, int right) //From w3resource.com
+        {
+            int pivot = list[left];
+            while (true)
+            {
+
+                while (list[left] < pivot)
+                {
+                    left++;
+                }
+
+                while (list[right] > pivot)
+                {
+                    right--;
+                }
+
+                if (left < right)
+                {
+                    if (list[left] == list[right]) return right;
+
+                    int temp = list[left];
+                    list[left] = list[right];
+                    list[right] = temp;
+
+
+                }
+                else
+                {
+                    return right;
+                }
+            }
+        }
+
+        public static void MakeRandomList(List<int> list, int size) //From w3resource.com
         {
             int newNumber;
             Random rand = new Random();
@@ -144,18 +193,22 @@ namespace Sorting
 
         static void Main(string[] args)
         {
+            List<int> l1 = new List<int>();
+
             Stopwatch sw = new Stopwatch();
-            int listSize = 50000;
+            int listSize = 30000;
             List<int> tallista1 = new List<int>();
             List<int> tallista2 = new List<int>();
             List<int> tallista3 = new List<int>();
             List<int> tallista4 = new List<int>();
+            List<int> tallista5 = new List<int>();
 
             MakeRandomList(tallista1,listSize);
             MakeRandomList(tallista2, listSize);
             MakeRandomList(tallista3, listSize);
             MakeRandomList(tallista4, listSize);
-
+            MakeRandomList(tallista5, listSize);
+            
             sw.Reset();
             sw.Start();
             BubbleSort(tallista1);
@@ -179,6 +232,12 @@ namespace Sorting
             MergeSort(tallista4);
             sw.Stop();
             Console.WriteLine("Merge Sort: " + sw.ElapsedMilliseconds + " millisekunder");
+
+            sw.Reset();
+            sw.Start();
+            QuickSort(tallista5,0,tallista5.Count-1);
+            sw.Stop();
+            Console.WriteLine("Quick Sort: " + sw.ElapsedMilliseconds + " millisekunder");
         }
     }
 }
