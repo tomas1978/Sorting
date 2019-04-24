@@ -73,6 +73,38 @@ namespace Sorting
             }
         }
 
+        public static void CombSort(List<int> data) //from https://www.csharpstar.com
+        {
+            double gap = data.Count;
+            bool swaps = true;
+
+            while (gap > 1 || swaps)
+            {
+                gap /= 1.247330950103979;
+
+                if (gap < 1)
+                    gap = 1;
+
+                int i = 0;
+                swaps = false;
+
+                while (i + gap < data.Count)
+                {
+                    int igap = i + (int)gap;
+
+                    if (data[i] > data[igap])
+                    {
+                        int temp = data[i];
+                        data[i] = data[igap];
+                        data[igap] = temp;
+                        swaps = true;
+                    }
+
+                    ++i;
+                }
+            }
+        }
+
         private static List<int> MergeSort(List<int> unsorted) //From w3resource.com
         {
             if (unsorted.Count <= 1)
@@ -193,21 +225,23 @@ namespace Sorting
 
         static void Main(string[] args)
         {
-            List<int> l1 = new List<int>();
-
             Stopwatch sw = new Stopwatch();
-            int listSize = 30000;
+            int listSize = 20000;
             List<int> tallista1 = new List<int>();
             List<int> tallista2 = new List<int>();
             List<int> tallista3 = new List<int>();
             List<int> tallista4 = new List<int>();
             List<int> tallista5 = new List<int>();
-
+            List<int> tallista6 = new List<int>();
+            List<int> tallista7 = new List<int>();
+            
             MakeRandomList(tallista1,listSize);
             MakeRandomList(tallista2, listSize);
             MakeRandomList(tallista3, listSize);
             MakeRandomList(tallista4, listSize);
             MakeRandomList(tallista5, listSize);
+            MakeRandomList(tallista6, listSize);
+            MakeRandomList(tallista7, listSize);
             
             sw.Reset();
             sw.Start();
@@ -225,7 +259,7 @@ namespace Sorting
             sw.Start();
             InsertionSort(tallista3);
             sw.Stop();
-            Console.WriteLine("Insertionsort: " + sw.ElapsedMilliseconds + " millisekunder");
+            Console.WriteLine("Insertionsort: " + sw.ElapsedMilliseconds + " millisekunder"); 
 
             sw.Reset();
             sw.Start();
@@ -238,6 +272,19 @@ namespace Sorting
             QuickSort(tallista5,0,tallista5.Count-1);
             sw.Stop();
             Console.WriteLine("Quick Sort: " + sw.ElapsedMilliseconds + " millisekunder");
+
+            sw.Reset();
+            sw.Start();
+            CombSort(tallista6);
+            sw.Stop();
+            Console.WriteLine("Comb Sort: " + sw.ElapsedMilliseconds + " millisekunder");
+
+            sw.Reset();
+            sw.Start();
+            tallista7.Sort();
+            sw.Stop();
+            Console.WriteLine(".NET built in sort: " + sw.ElapsedMilliseconds + " millisekunder");
+
         }
     }
 }
